@@ -1,15 +1,80 @@
-class Course {
-    constructor({
-        name,
-        clases: [],
-    }){
-        this.name = name;
+class Comment {
+  constructor({
+    content,
+    stundentName,
+    studentRole = "estudiante",
+  }){
+    this.content = content;
+    this.studentName= stundentName;
+    this.studentRole= studentRole;
+    this.likes = 0;
+
+  }
+   publicar(){
+    console.log(this.studentName + " (" + this.studentRole + ")");
+    console.log(this.likes + "likes");
+    console.log(this.content);
+   }
+  
+
+}
+
+function videoPlay(id)
+  {const urlSecreta="https://platziultrasecretomasquelanasa.com/"+id;
+  console.log("Se está reproduciendo desde la url "+urlSecreta);
+}
+
+function videoStop(id)
+  {const urlSecreta="https://platziultrasecretomasquelanasa.com/"+id;
+  console.log("Pausamos la url "+urlSecreta);
+}
+
+
+
+class PlatziClass{
+  constructor({name,videoID,})
+    {this.name=name;
+    this.videoID=videoID;}
+
+    
+
+  reproducir(){videoPlay(this.videoID);}
+  pausar(){videoStop(this.videoID);}
+}
+
+
+class Course{
+    constructor({name,
+      clases= [],
+      isFree= false,
+      lang="spanish",
+     })
+     
+     {
+        this._name = name;
         this.clases = clases;
+        this.isFree= isFree;
+        this.lang= lang;
+    }
+
+    get name(){
+        return this._name; 
+    }
+
+    set name(nuevoNombre){
+        if (nuevoNombre === "curso"){
+            console.error("no");
+        }else{
+         this._name =nuevoNombre;
+        }
+        
     }
 }
 
 const cursoProgBasica = new Course ({
     name: "Curso Gratis de programacion Basica",
+    isFree: true,
+
 });
 
 const cursoDefinitivoHTML = new Course({
@@ -17,6 +82,7 @@ const cursoDefinitivoHTML = new Course({
   });
   const cursoPracticoHTML = new Course({
     name: "Curso Practico de HTML y CSS",
+    lang: "english",
   });
 
   class LearningPath {
@@ -75,9 +141,19 @@ const cursoDefinitivoHTML = new Course({
             twiter,
             instagram,
             facebook,
-        }
+        };
         this.approvedCoruses = approvedCoruses;
         this.learningPaths = learningPaths;
+                
+    }
+    pblicarComentario(commentContent) {
+      const comment = new Comment({
+        content: commentContent,
+        stundentName:this.name,
+
+      });
+      comment.publicar();
+
     }
   }
 
