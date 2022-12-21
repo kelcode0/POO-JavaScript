@@ -153,22 +153,79 @@ const cursoDefinitivoHTML = new Course({
 
       });
       comment.publicar();
-
+      
     }
   }
 
-  const juan3 = new Student({
-    name:"juan",
-    email: "juand@tmail.com",
-    username:"juanxt",
-    facebook: "juanjuan",
-    learningPaths:[
-        escuelaWeb,
-        escuelaVgs,
+  class FreeStudent extends Student {
+    constructor(prop){
+      super(prop);
+    }
+    approvedCoruses(newCourse){
+      if (newCourse.isFree){
+        this.approvedCoruses.push(newCourse);
+
+      }else{
+        console.warn("lo sentimos, " + this.name + ", no puedes tener cursos abiertos");
+      }
+    }
+  }
+
+  class BasicStudent extends Student{
+    constructor(prop){
+      super(prop);
+    }
+    approvedCoruses(newCourse){
+      if(newCourse.lang !== "english"){
+        this.approvedCoruses.push(newCourse);
+
+      }else{
+        console.warn("Lo sentimos, " + this.name + ", no puedes tomar cursos en inglés");
+
+      }
+    }
+  }
+
+  class ExpertStudent extends Student{
+    constructor(prop){
+      super(prop);
+    }
+    approvedCoruses(newCourse){
+      this.approvedCoruses.push(newCourse);
+    }
+  }
+
+  class TeacherStudent extends Student {
+    constructor(props) {
+      super(props);
+    }
+  
+    approveCourse(newCourse) {
+      this.approvedCourses.push(newCourse);
+    }
+  
+    publicarComentario(commentContent) {
+      const comment = new Comment({
+        content: commentContent,
+        studentName: this.name,
+        studentRole: "profesor",
+      });
+      comment.publicar();
+    }
+  }
+
+  const juan = new FreeStudent({
+    name: "JuanDC",
+    username: "juandc",
+    email: "juanito@juanito.com",
+    twitter: "fjuandc",
+    learningPaths: [
+      escuelaWeb,
+      escuelaVgs,
     ],
   });
-
-  const miguelito2 = new Student({
+  
+  const miguelito = new BasicStudent({
     name: "Miguelito",
     username: "migelitofeliz",
     email: "miguelito@juanito.com",
@@ -177,4 +234,11 @@ const cursoDefinitivoHTML = new Course({
       escuelaWeb,
       escuelaData,
     ],
+  });
+  
+  const freddy = new TeacherStudent({
+    name: "Freddy Vega",
+    username: "freddier",
+    email: "f@gep.com",
+    instagram: "freddiervega",
   });
